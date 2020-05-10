@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>  
+  <body>
+    <div id="splash">
+      <div id="splash-text"> 
+        <span id="welcome" Welcome to Musical Windows <br> 
+        Create your own rhythms <br> 
+        Experment with effects and scales. <br>
+        Have fun!</span>
+        <br><br>
+        <span id="click"> Click to begin </span>
+      </div>
+    </div>
+    <div id="topcontainer">
+      <div id="display">
+        <button id="scaledisplay">
+        </button>
+        <div id="scalelist">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="column" id="column1">
+
+    </div>
+    <div class="column" id="column2">
+      
+    </div>
+    <div class="column" id="column3">
+      
+    </div>
+    <div id="bottomcontainer">
+      
+      <div id="synthinfo">
+        <div id="arrow">
+        &#8593 
+      </div> 
+        <div id="options">
+          <div id="opcolumn1">
+            <br>
+            R<span id="r" class="revealtext">everb
+ 
+            </span>
+            <br>
+           
+            D<span id="d" class="revealtext">elay
+  
+            </span>
+            <br>
+            
+            V<span id="v" class="revealtext">olume
+         
+            </span>
+            <br>
+          </div>
+          <div id="opcolumn2">
+            Marimba
+            <div class="slidecontainer">
+              <input type="range" min="0" max="100" value="0" class="slider" id="reverb1">
+            </div>
+            <div class="slidecontainer">
+              <input type="range" min="0" max="100" value="0" class="slider" id="delay1">
+            </div>
+            <div class="slidecontainer">
+                <input type="range" min="-70" max="0" value="-20" class="slider" id="volume1">
+            </div>
+        
+          </div>
+          
+          <div id="opcolumn3">
+            Steel Drum
+            <div class="slidecontainer">
+              <input type="range" min="0" max="100" value="0" class="slider" id="reverb2">
+            </div>
+            <div class="slidecontainer">
+              <input type="range" min="0" max="100" value="0" class="slider" id="delay2">
+            </div>
+
+            <div class="slidecontainer">
+              <input type="range" min="-70" max="0" value="-20" class="slider" id="volume2">
+            </div>
+          </div>
+           <div id="opcolumn4">
+             Sawtooth Synth
+              <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="0" class="slider" id="reverb3">
+              </div>
+              <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="0" class="slider" id="delay3">
+              </div>
+
+              <div class="slidecontainer">
+                <input type="range" min="-70" max="0" value="-30" class="slider" id="volume3">
+              </div>
+
+
+            </div>
+          <div id="opcolumn5">
+    
+      
+            <button id="reset">
+              STOP
+            </button>
+            
+          </div>
+               
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.2.0/Tone.js"></script>   
+    <script src="teoria.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
