@@ -1,12 +1,5 @@
 $(document).ready(function(){
 
-const Tone = window.Tone;
-const teoria = window.teoria;
-
-// document.body.addEventListener('cliick',()=>{
-//   Tone.start()
-// })
-
 //SPLASH INTERACTION
 const splash = document.querySelector("#splash")
 const splashClick = document.querySelector("#click")
@@ -21,21 +14,19 @@ splashClick.addEventListener("mouseleave", ()=>{
   splash.style.opacity = "1"
 })
 
-
-
 //SLIDER CONTROLS
-const reverb1 = document.querySelector("#reverb1");
-const reverb2 = document.querySelector("#reverb2");
-const reverb3 = document.querySelector("#reverb3");
-const delay1 = document.querySelector("#delay1");
-const delay2 = document.querySelector("#delay2");
-const delay3 = document.querySelector("#delay3");
-const db1 = document.querySelector("#volume1").value;
-const db2 = document.querySelector("#volume2").value;
-const db3 = document.querySelector("#volume3").value;
+const reverb1 = document.querySelector("#reverb1")
+const reverb2 = document.querySelector("#reverb2")
+const reverb3 = document.querySelector("#reverb3")
+const delay1 = document.querySelector("#delay1")
+const delay2 = document.querySelector("#delay2")
+const delay3 = document.querySelector("#delay3")
+const db1 = document.querySelector("#volume1").value
+const db2 = document.querySelector("#volume2").value
+const db3 = document.querySelector("#volume3").value
 
 //TONE SOUNDS
-var synth1 = new Tone.Synth({
+const synth1 = new Tone.Synth({
     "oscillator": {
         "partials": [
             1,
@@ -52,7 +43,7 @@ var synth1 = new Tone.Synth({
         "release": 1.2
     }
 }) 
-var synth2 = new Tone.Synth({
+const synth2 = new Tone.Synth({
     "oscillator": {
         "type": "fatcustom",
       	"partials" : [0.2, 1, 0, 0.5, 0.1],
@@ -66,7 +57,7 @@ var synth2 = new Tone.Synth({
         "release": 1.6
     }
 }) 
-var synth3 = new Tone.Synth({
+const synth3 = new Tone.Synth({
     "oscillator" : {
         "type" : "fatsawtooth",
         "count" : 3,
@@ -80,36 +71,36 @@ var synth3 = new Tone.Synth({
         "attackCurve" : "exponential"
     }
 }) // this creates a synth and connects it to speakers
-var freeverb1 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 800}).toMaster();
-var freeverb2 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).toMaster();
-var freeverb3 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).toMaster();
-var ppdelay1 = new Tone.PingPongDelay(0.25, 0.5).toMaster();
-var ppdelay2 = new Tone.PingPongDelay(0.25, 0.5).toMaster();
-var ppdelay3 = new Tone.PingPongDelay(0.25, 0.5).toMaster();  
-var octiveDown = new Tone.PitchShift([-12]).toMaster();
-synth1.set("volume", db1);
-synth2.set("volume", db2);
-synth3.set("volume", db3);
+const freeverb1 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 800}).toMaster()
+const freeverb2 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).toMaster()
+const freeverb3 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).toMaster()
+const ppdelay1 = new Tone.PingPongDelay(0.25, 0.5).toMaster()
+const ppdelay2 = new Tone.PingPongDelay(0.25, 0.5).toMaster()
+const ppdelay3 = new Tone.PingPongDelay(0.25, 0.5).toMaster() 
+const octiveDown = new Tone.PitchShift([-12]).toMaster();
+synth1.set("volume", db1)
+synth2.set("volume", db2)
+synth3.set("volume", db3)
 synth1.connect(ppdelay1).connect(freeverb1)
 synth2.connect(ppdelay2).connect(freeverb2)
 synth3.connect(ppdelay3).connect(freeverb3)
-ppdelay1.wet.value = 0;
-ppdelay2.wet.value = 0;
-ppdelay3.wet.value = 0;
-freeverb1.wet.value = 0;
-freeverb2.wet.value = 0;
-freeverb3.wet.value = 0;
-octiveDown.wet.value = 1;
+ppdelay1.wet.value = 0
+ppdelay2.wet.value = 0
+ppdelay3.wet.value = 0
+freeverb1.wet.value = 0
+freeverb2.wet.value = 0
+freeverb3.wet.value = 0
+octiveDown.wet.value = 1
   
 //CONTROLS FOR ALL SLIDERS  
-var slider = document.querySelectorAll(".slider");  
+const slider = document.querySelectorAll(".slider")  
 slider.forEach(function(slide) {
   slide.addEventListener("input", function(e) {
-    var value = e.target.value;
-    var id = e.target.id;
-    var column1 = document.querySelector("#column1");
-    var column2 = document.querySelector("#column2");
-    var column3 = document.querySelector("#column3");
+    const value = e.target.value
+    const id = e.target.id
+    const column1 = document.querySelector("#column1")
+    const column2 = document.querySelector("#column2")
+    const column3 = document.querySelector("#column3")
     if (id === "reverb1") {
       freeverb1.wet.value = value/100
       column1.style.transition = "background-color " + value/70 + "s";
@@ -138,21 +129,18 @@ slider.forEach(function(slide) {
   
   
 // GENERATE SCALE BUTTONS
-var allScales = teoria.Scale.KNOWN_SCALES;
-var scaleList = document.querySelector("#scalelist");
+const allScales = teoria.Scale.KNOWN_SCALES;
+const scaleList = document.querySelector("#scalelist");
 allScales.forEach(function(scale) {
-  var button = document.createElement("button");
+  const button = document.createElement("button");
   button.innerHTML = scale;
   scaleList.appendChild(button);
   button.classList.add("scalechoice")
 })
   
  //DISPLAY CURRENT SCALE. 
-// var scaleDisplay = "major";
-var scaleDisplayElement = document.querySelector("#scaledisplay")
-// function displayCurrentScale() {
-//   document.querySelector("#scaledisplay").innerHTML = "hello"
-// }
+const scaleDisplayElement = document.querySelector("#scaledisplay")
+
 
 //DISPLAY SCALE LIST ON HOVER
 scaleDisplayElement.addEventListener("mouseenter", function(e){
@@ -164,9 +152,9 @@ scaleList.addEventListener("mouseleave", function(e) {
 })
   
 //SCALE DEFINITION FUNCTION
-var scaleDisplay = document.querySelector("#scaledisplay");
+const scaleDisplay = document.querySelector("#scaledisplay");
 scaleDisplay.innerHTML = "Scale: major";
-var currentScale = getScale("c4", "major");
+let currentScale = getScale("c4", "major");
 function getScale(root, scale) {
   return teoria.scale(root, scale).notes().map(function(note){
     return note.midi()
@@ -174,14 +162,12 @@ function getScale(root, scale) {
   })
 }
 
-
-
 //BUTTON EVENTLISTENER 
-var scaleButtons = document.querySelectorAll(".scalechoice");
+const scaleButtons = document.querySelectorAll(".scalechoice");
 scaleButtons.forEach(function(button) {
   button.addEventListener("click", function(e) {
-    var scale = e.target.innerHTML;
-    var root = "c4"; // this can be changed, but will be the root of the scales;
+    let scale = e.target.innerHTML;
+    let root = "c4"; // this can be changed, but will be the root of the scales;
     currentScale = getScale(root, scale);
     scaleDisplay.innerHTML = "Scale: " + scale;
   })
@@ -191,9 +177,9 @@ scaleButtons.forEach(function(button) {
   
 //PLAY RANDOM NOTE 
 function playRandomNote(id) {
-  var synth;
-  var num = Math.floor(Math.random()*currentScale.length);
-  var frequency = Tone.Frequency(currentScale[num], "midi");
+  let synth
+  let num = Math.floor(Math.random()*currentScale.length);
+  let frequency = Tone.Frequency(currentScale[num], "midi");
   if (id === "column1") {
     synth = synth1;
   } else if (id === "column2") {
@@ -207,9 +193,9 @@ function playRandomNote(id) {
 }
 //FUNCTION THAT CHANGES BACKGROUND COLOR OF EACH COLUMN and CALLS playRandomNote() EVERY 1000ms  
 function changeBackground(element) {
-      var r = Math.floor(Math.random() * 256);
-      var g = Math.floor(Math.random() * 256);
-      var b = Math.floor(Math.random() * 256);
+      let r = Math.floor(Math.random() * 256);
+      let g = Math.floor(Math.random() * 256);
+      let b = Math.floor(Math.random() * 256);
       element.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')'; //this changes the background color every second
     }
 
@@ -217,15 +203,15 @@ function changeBackground(element) {
 
 
 // THIS ADDS EVENT LISTENERS FOR EACH COLUMN  
-var columns = document.querySelectorAll('.column'); 
+const  columns = document.querySelectorAll('.column') 
 columns.forEach(function(column){ // this returns an array of all objects with class .column
   column.addEventListener("click", function(e) { //for each of those objects we attach an event listener
-    var element = e.target; //the e.target will be the specific object
-    var id = element.id;
-    changeBackground(element);
+    let element = e.target; //the e.target will be the specific object
+    let id = element.id;
+    changeBackground(element)
     playRandomNote(id);
     if (element.classList.contains("column")) {
-      startInterval(element, id); //this calls the function with the input of the event's target
+      startInterval(element, id) //this calls the function with the input of the event's target
     }
   } 
                           // ,{once: true}
@@ -235,31 +221,31 @@ columns.forEach(function(column){ // this returns an array of all objects with c
 
   
 //SLIDE BAR TOP
-var topContainer = $("#topcontainer")
+const topContainer = $("#topcontainer")
 $(".column").click(function() {
-  topContainer.css("transform", "translateY(-30%)");
+  topContainer.css("transform", "translateY(-30%)")
 });
   
 topContainer.dblclick(function() {
-  topContainer.css("transform", "translateY(-100%)");
-});
+  topContainer.css("transform", "translateY(-100%)")
+})
 
 
 //SLIDE BAR BOTTOM
-var bottomContainer = document.querySelector("#bottomcontainer");
-var arrow = document.querySelector("#arrow")
+const bottomContainer = document.querySelector("#bottomcontainer");
+const arrow = document.querySelector("#arrow")
 bottomContainer.addEventListener("mouseenter", function(e) {
-  e.target.style.transform = "translateY(10px)";
-  e.target.style.opacity = "1";
+  e.target.style.transform = "translateY(10px)"
+  e.target.style.opacity = "1"
   arrow.style.transform = "rotate(180deg)"
-  arrow.style.transition = "transform 1s";
+  arrow.style.transition = "transform 1s"
   
 })
 bottomContainer.addEventListener("mouseleave", function(e) {
-  e.target.style.transform = "translateY(170px)";
-  e.target.style.opacity = 0.4;
+  e.target.style.transform = "translateY(170px)"
+  e.target.style.opacity = 0.4
   arrow.style.transform = "rotate(360deg)"
-  arrow.style.transition = "transform 1s";
+  arrow.style.transition = "transform 1s"
 })
 
 
@@ -271,25 +257,25 @@ bottomContainer.addEventListener("mouseleave", function(e) {
 //INITIAL STATE HOVERING
 columns.forEach(function(column) {
   column.setAttribute("data-clicked", false)
-});
+})
   
 columns.forEach(function(column) {
   column.addEventListener("click", function(e) {
-    column.setAttribute("data-clicked", true);
+    column.setAttribute("data-clicked", true)
     column.style.transition = "background-color 0s"
   })
   column.addEventListener("mouseenter", function(e) {
     if (column.getAttribute("data-clicked") == 'false') {
-      var element = e.target;
-      var id = e.target.id;
+      let element = e.target
+      let id = e.target.id
       column.style.transition = "background-color 0s"
-      changeBackground(element);
-      playRandomNote(id);
+      changeBackground(element)
+      playRandomNote(id)
     }
   });
   column.addEventListener("mouseleave", function(e) {
     if (column.getAttribute("data-clicked") == 'false') {
-      e.target.style.backgroundColor = "white";
+      e.target.style.backgroundColor = "white"
       column.style.transition = "background-color 0s"
 
     }
@@ -297,27 +283,26 @@ columns.forEach(function(column) {
 });               
 
   //FUNCTION CHANGES BG COLOR AND PLAYS RANDOM NOTE EVERY SECOND
-
 var flash;
 function startInterval (element, id) { //this function has an input, element, retrieved from the function below  
   if (id) {
     flash = setInterval(function() {
-      changeBackground(element);
-      playRandomNote(id);
-    }, 1000);
+      changeBackground(element)
+      playRandomNote(id)
+    }, 1000)
   }  
 }
 // CLEAR INTERVAL
-var reset = document.querySelector("#reset");
+const reset = document.querySelector("#reset")
 reset.addEventListener("click", function(i) {
   columns.forEach(function(column) {
-    column.style.backgroundColor = "white";
+    column.style.backgroundColor = "white"
     column.style.transition = "background-color 2s"
-    column.setAttribute("data-clicked", false);
+    column.setAttribute("data-clicked", false)
   });
   for(i=0; i<100; i++) //clears the all intervalss
   {
-    window.clearInterval(i);
+    window.clearInterval(i)
   };
 });
 
