@@ -1,16 +1,15 @@
-$(document).ready(function(){
 
 //SPLASH INTERACTION
 const splash = document.querySelector("#splash")
 const splashClick = document.querySelector("#click")
 
-splashClick.addEventListener("click", ()=>{
+splashClick.addEventListener("click", () => {
   splash.style.display = "none"
 })
-splashClick.addEventListener("mouseenter", ()=>{
+splashClick.addEventListener("mouseenter", () => {
   splash.style.opacity = "0.8"
 })
-splashClick.addEventListener("mouseleave", ()=>{
+splashClick.addEventListener("mouseleave", () => {
   splash.style.opacity = "1"
 })
 
@@ -94,8 +93,8 @@ octiveDown.wet.value = 1
   
 //CONTROLS FOR ALL SLIDERS  
 const slider = document.querySelectorAll(".slider")  
-slider.forEach(function(slide) {
-  slide.addEventListener("input", function(e) {
+slider.forEach( slide => {
+  slide.addEventListener("input", e => {
     const value = e.target.value
     const id = e.target.id
     const column1 = document.querySelector("#column1")
@@ -143,10 +142,10 @@ const scaleDisplayElement = document.querySelector("#scaledisplay")
 
 
 //DISPLAY SCALE LIST ON HOVER
-scaleDisplayElement.addEventListener("mouseenter", function(e){
+scaleDisplayElement.addEventListener("mouseenter", e => {
   scaleList.style.display = "block";
 })
-scaleList.addEventListener("mouseleave", function(e) {
+scaleList.addEventListener("mouseleave", e => {
   scaleList.style.display = "none"
   scaleList.style.backgroundColor = "white"
 })
@@ -164,7 +163,7 @@ function getScale(root, scale) {
 
 //BUTTON EVENTLISTENER 
 const scaleButtons = document.querySelectorAll(".scalechoice");
-scaleButtons.forEach(function(button) {
+scaleButtons.forEach(button => {
   button.addEventListener("click", function(e) {
     let scale = e.target.innerHTML;
     let root = "c4"; // this can be changed, but will be the root of the scales;
@@ -204,7 +203,7 @@ function changeBackground(element) {
 
 // THIS ADDS EVENT LISTENERS FOR EACH COLUMN  
 const  columns = document.querySelectorAll('.column') 
-columns.forEach(function(column){ // this returns an array of all objects with class .column
+columns.forEach(column => { // this returns an array of all objects with class .column
   column.addEventListener("click", function(e) { //for each of those objects we attach an event listener
     let element = e.target; //the e.target will be the specific object
     let id = element.id;
@@ -216,32 +215,30 @@ columns.forEach(function(column){ // this returns an array of all objects with c
   } 
                           // ,{once: true}
   ) //once the element has been clicked, bgChange() is no longer called
-});
+})
 
 
   
 //SLIDE BAR TOP
-const topContainer = $("#topcontainer")
-$(".column").click(function() {
-  topContainer.css("transform", "translateY(-30%)")
-});
-  
-topContainer.dblclick(function() {
-  topContainer.css("transform", "translateY(-100%)")
+const topContainer = document.querySelector("#topcontainer")
+columns.forEach(column => {
+  column.addEventListener("click", ()=> {
+    topContainer.style.transform = "translateY(-30%)"
+  })
 })
 
 
 //SLIDE BAR BOTTOM
 const bottomContainer = document.querySelector("#bottomcontainer");
 const arrow = document.querySelector("#arrow")
-bottomContainer.addEventListener("mouseenter", function(e) {
+bottomContainer.addEventListener("mouseenter", e => {
   e.target.style.transform = "translateY(10px)"
   e.target.style.opacity = "1"
   arrow.style.transform = "rotate(180deg)"
   arrow.style.transition = "transform 1s"
   
 })
-bottomContainer.addEventListener("mouseleave", function(e) {
+bottomContainer.addEventListener("mouseleave", e => {
   e.target.style.transform = "translateY(170px)"
   e.target.style.opacity = 0.4
   arrow.style.transform = "rotate(360deg)"
@@ -251,20 +248,20 @@ bottomContainer.addEventListener("mouseleave", function(e) {
 
   
   
-//COLLOR GENERATE FUNCTION FOR HOVER COLUMNS
+//COLOR GENERATE FUNCTION FOR HOVER COLUMNS
 //FUNCTION THAT GENERATES RANDOM BGR COLOR ON PAGE LOAD
 //APPLY COLOR TO EACH OF THE COLUMNS
 //INITIAL STATE HOVERING
-columns.forEach(function(column) {
+columns.forEach(column => {
   column.setAttribute("data-clicked", false)
 })
   
-columns.forEach(function(column) {
+columns.forEach(column => {
   column.addEventListener("click", function(e) {
     column.setAttribute("data-clicked", true)
     column.style.transition = "background-color 0s"
   })
-  column.addEventListener("mouseenter", function(e) {
+  column.addEventListener("mouseenter", e => {
     if (column.getAttribute("data-clicked") == 'false') {
       let element = e.target
       let id = e.target.id
@@ -272,7 +269,7 @@ columns.forEach(function(column) {
       changeBackground(element)
       playRandomNote(id)
     }
-  });
+  })
   column.addEventListener("mouseleave", function(e) {
     if (column.getAttribute("data-clicked") == 'false') {
       e.target.style.backgroundColor = "white"
@@ -280,13 +277,13 @@ columns.forEach(function(column) {
 
     }
   })
-});               
+})               
 
   //FUNCTION CHANGES BG COLOR AND PLAYS RANDOM NOTE EVERY SECOND
 var flash;
-function startInterval (element, id) { //this function has an input, element, retrieved from the function below  
+const startInterval = (element, id) => { //this function has an input, element, retrieved from the function below  
   if (id) {
-    flash = setInterval(function() {
+    flash = setInterval(() => {
       changeBackground(element)
       playRandomNote(id)
     }, 1000)
@@ -295,7 +292,7 @@ function startInterval (element, id) { //this function has an input, element, re
 // CLEAR INTERVAL
 const reset = document.querySelector("#reset")
 reset.addEventListener("click", function(i) {
-  columns.forEach(function(column) {
+  columns.forEach(column => {
     column.style.backgroundColor = "white"
     column.style.transition = "background-color 2s"
     column.setAttribute("data-clicked", false)
@@ -303,10 +300,10 @@ reset.addEventListener("click", function(i) {
   for(i=0; i<100; i++) //clears the all intervalss
   {
     window.clearInterval(i)
-  };
-});
-
+  }
 })
+
+
   
   
   
