@@ -9,44 +9,44 @@ h1 {
 }
 #splash {
   width: 100vw;
-  height: 200vh;
+  height: 100vh;
   background-color: rgb(134, 63, 156);
   position: fixed;
   display: flex;
   justify-content: center;
-  
+  display: flex
 }
 
-#splash-text {
+#splash > #splash-text {
   text-align: center;
   margin-top: 10%;
   color: rgb(227, 215, 235);
   font-size: 30px;
 }
-#click {
+#splash > #splash-text > #click {
   text-decoration: underline;
   cursor: pointer
 }
 
-#click:hover {
+#splash > #splash-text > #click:hover {
   font-weight: bold;
 }
 
-#warning{
+#splash > #splash-text > #warning{
   font-size: 20px;
 }
+
+
 .column {
   width: 33.33%;
   float: left;
   height: 100vh;
-/*   transition: background-color 0.2s; */
-}
-.text {
-  font-size: 3rem;
 }
 
 
-#topcontainer {
+
+
+#top-container {
   cursor: pointer;
   position: absolute;
   background-color: white;
@@ -60,11 +60,39 @@ h1 {
   transition: transform 1.0s;
   opacity: 0.8;
 }
-#topcontainer:hover {
+#top-container:hover {
   opacity: 1;
   transition: opacity 1s;
 }
-#topcontainer button {
+
+
+#top-container > #reset-button-container {
+  position: absolute;
+  right:0;
+  top: 0;
+  width:100px;
+  height: 100%;
+}
+#top-container > #reset-button-container > #reset {
+  margin-top: 13px;
+  width: 100%;
+  height:100%;
+  transition: transform 0.5s;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+#top-container > #reset-button-container > #reset > svg > path {
+  fill: darkmagenta
+}
+
+#top-container > #reset-button-container > #reset:hover {
+  transform: rotateZ(360deg)
+}
+
+
+#top-container .scale-button, #scale-display {
   background-color: transparent;
   padding: 0px;
   font-family: inherit;
@@ -72,17 +100,17 @@ h1 {
   border: none;
 }
 
-#topcontainer button:hover {
+#top-container .scale-button:hover {
   background-color: violet;
   transition: background-color 0.2s;
   
 }
-#topcontainer button:focus {
+#top-container .scale-button:focus {
   border: none;
   outline: none;
   background-color: violet;
 }
-#display {
+#top-container > #display {
   width: 350px;
   background-color: transparent;
   padding-top: 35px;
@@ -90,151 +118,124 @@ h1 {
 
 }
 
-#scalelist {
+#top-container > #display > #scale-list {
   display: none;
   position: absolute;
   background-color: transparent !IMPORTANT;
   margin-top: 20px;
   margin-left: 60px;
 }
-#scalelist button {
+#top-container > #display > #scale-list > .scale-button {
   display: block;
- 
 }
 
-
-#mydiv {
-  position: absolute; 
-  z-index: 9;
-  text-align: center;
-  bottom: 30px;
-  left: 15px;
-}
-#mydivheader {
-  padding: 10px;
-  cursor: pointer;
-  z-index: 10;
-  background-color: magenta;
-  color: white;
-  border-radius: 50%;
-  height: 25px;
-  width: 25px;
-  font-weight: bold;
-  font-size: 1.5rem;
-  opacity: 0.5
-}
-
-#mydivheader:hover {
-  opacity: 1;
-  transform: rotateX(720deg);
-  transform: rotateY(360deg);
-  transform: rotateZ(1440deg);
-  transition: transform 2s, opacity 0.3s;
-}
-
-#hiddeninfo {
-  display: none;
-  font-size: 1rem;
-  height: 100px;
-  width: 100px;
-}
-
-#bottomcontainer {
+#bottom-container {
+  height: 190px;
+  width: 100vw;
+  bottom: 0;
   position: absolute;
   background-color: violet;
-  width: 100vw;
-  height: 200px;
-  bottom: 0;
+  transform: translateY(150px);
+  transition: transform 0.5s;
+}
+#bottom-container.active {
+    opacity: 1;
+    transform: translateY(10px)
+}
+@media screen and (max-width: 906px) {
+  #bottom-container {
+    height: 400px;
+    transform: translateY(357px)
+  }
+  #bottom-container.active {
+    transform: translateY(6px);
+  }
+}
+
+#bottom-container > #arrow-container {
+  background-color: transparent;
+  margin-top: 5px;
+  height: 40px;
   display: flex;
   justify-content: center;
-  opacity: 0.5;
-  font-size: 1.4rem;
-  transform: translateY(170px);
-  transition: transform 0.5s, opacity 1s;
-  padding-top: 2px;
+}
+#bottom-container > #arrow-container > #arrow {
+  
+  color: whitesmoke;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 1s
 }
 
-
-#arrow {
-  height: 40px;
-  background-color: inherit;
-  text-align: center;
-  color: white;
-  }
-#stop {
-  display: none;
-}
-
-@media (min-width: 807px) {
-  #options {
-    width: 20px;
-    overflow: auto;
-  }
-}
-  .slider {
-    width: auto;
-  }
-#options {
-  color: white;
-  width: 800px;
+#bottom-container > #options-container {
+  display: flex;
+  width: 100vw;
   height: auto;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
 }
 
-.slider {
-  appearance: none;
-  width: 150px;
+#bottom-container > #options-container > .option {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  color: whitesmoke
+}
+
+#bottom-container > #options-container > .option > .option-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+#bottom-container > #options-container > .option > .slide-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#bottom-container > #options-container > .option > .slide-container > .slide-text {
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+#bottom-container > #options-container > .option > .slide-container > .slide {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d8bffa;
   outline: none;
-  cursor: pointer;
-  
-}
-#opcolumn1 {
-  width: 12.5%;
-  float: left;
-}
-#opcolumn2, #opcolumn3, #opcolumn4 {
-  width: 25%;
-  float: left;
-  text-align: center;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
-#opcolumn5 {
-  width: 12.5%;
-  float: left;
+#bottom-container > #options-container > .option > .slide-container > .slide:hover {
+  opacity: 1;
 }
 
-#bottomcontainer button {
-  font-family: inherit;
-  background-color:violet;
-  color: white;
-  width: 100px;
-  height: 50px;
-  font-size: 1.1rem;
-  border: none;
-}
-#bottomcontainer button:hover{
-  background-color: lightblue;
-  color: white;
-}
-#bottomcontainer button:focus {
-    outline: none;
-}
-#bottomcontainer button:active {
-  background-color: violet;
-  box-shadow: none;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.revealtext {
-  opacity: 0;
-  transition: opacity 0.9s;
+#bottom-container > #options-container > .option > .slide-container > .slide::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: rgb(98, 51, 172);
   cursor: pointer;
 }
-.revealtext:hover {
-  opacity: 0.9
+
+#bottom-container > #options-container > .option > .slide-container > .slide::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: rgb(98, 51, 172);
+  cursor: pointer;
 }
 
-#reset {
-  margin-top: 37px;
-  border-radius: 25px;
-}
-  
+
+
+
+
+

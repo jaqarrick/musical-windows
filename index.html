@@ -29,11 +29,15 @@
         <span id="warning"> *** this site displays flashing lights and colors *** </span>
       </div>
     </div>
-    <div id="topcontainer">
+    <div id="top-container">
+      <div id="reset-button-container">
+        <button id="reset">
+          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><path d="M5.115 3.515c4.617-4.618 12.056-4.676 16.756-.195l2.129-2.258v7.938h-7.484l2.066-2.191c-2.82-2.706-7.297-2.676-10.073.1-4.341 4.341-1.737 12.291 5.491 12.291v4.8c-3.708 0-6.614-1.244-8.885-3.515-4.686-4.686-4.686-12.284 0-16.97z"/></svg>        </button>
+      </div>
       <div id="display">
-        <button id="scaledisplay">
+        <button id="scale-display">
         </button>
-        <div id="scalelist">
+        <div id="scale-list">
         </div>
       </div>
     </div>
@@ -48,84 +52,65 @@
     <div class="column" id="column3">
       
     </div>
-    <div id="bottomcontainer">
-      
-      <div id="synthinfo">
+
+
+
+    <div id="bottom-container">
+      <div id="arrow-container"> 
         <div id="arrow">
         &#8593 
-      </div> 
-        <div id="options">
-          <div id="opcolumn1">
-            <br>
-            R<span id="r" class="revealtext">everb
- 
-            </span>
-            <br>
-           
-            D<span id="d" class="revealtext">elay
-  
-            </span>
-            <br>
-            
-            V<span id="v" class="revealtext">olume
-         
-            </span>
-            <br>
-          </div>
-          <div id="opcolumn2">
-            Marimba
-            <div class="slidecontainer">
-              <input type="range" min="0" max="100" value="0" class="slider" id="reverb1">
-            </div>
-            <div class="slidecontainer">
-              <input type="range" min="0" max="100" value="0" class="slider" id="delay1">
-            </div>
-            <div class="slidecontainer">
-                <input type="range" min="-70" max="0" value="-20" class="slider" id="volume1">
-            </div>
-        
-          </div>
-          
-          <div id="opcolumn3">
-            Steel Drum
-            <div class="slidecontainer">
-              <input type="range" min="0" max="100" value="0" class="slider" id="reverb2">
-            </div>
-            <div class="slidecontainer">
-              <input type="range" min="0" max="100" value="0" class="slider" id="delay2">
-            </div>
-
-            <div class="slidecontainer">
-              <input type="range" min="-70" max="0" value="-20" class="slider" id="volume2">
-            </div>
-          </div>
-           <div id="opcolumn4">
-             Sawtooth Synth
-              <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="0" class="slider" id="reverb3">
-              </div>
-              <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="0" class="slider" id="delay3">
-              </div>
-
-              <div class="slidecontainer">
-                <input type="range" min="-70" max="0" value="-30" class="slider" id="volume3">
-              </div>
-
-
-            </div>
-          <div id="opcolumn5">
-    
-      
-            <button id="reset">
-              STOP
-            </button>
-            
-          </div>
-               
         </div>
       </div>
+      <div id="options-container">
+        <div class="option">
+          <div class="option-header"> Marimba </div>
+          <div class="slide-container">
+            <span class="slide-text"> Reverb </span> 
+            <input type="range" min="0" max="100" value="0" class="slide" id="reverb1">
+          </div>
+          <div class="slide-container">
+            <span class="slide-text"> Delay </span>
+            <input type="range" min="0" max="100" value="0" class="slide" id="delay1">
+          </div>
+          <div class="slide-container">
+            <span class="slide-text"> Volume </span>
+            <input type="range" min="-30" max="0" value="-20" class="slide" id="volume1">
+          </div>
+        </div>
+        <div class="option">
+          <div class="option-header"> Steel Drum </div>
+          <div class="slide-container">
+            <span class="slide-text"> Reverb </span> 
+            <input type="range" min="0" max="100" value="0" class="slide" id="reverb2">
+          </div>
+          <div class="slide-container">
+            <span class="slide-text"> Delay </span>
+            <input type="range" min="0" max="100" value="0" class="slide" id="delay2">
+          </div>
+          <div class="slide-container">
+            <span class="slide-text"> Volume </span>
+            <input type="range" min="-30" max="0" value="-20" class="slide" id="volume2">
+          </div>
+        </div>
+        <div class="option">
+          <div class="option-header"> Sawtooth Synth </div>
+          <div class="slide-container">
+            <span class="slide-text"> Reverb </span> 
+            <input type="range" min="0" max="100" value="0" class="slide" id="reverb3">
+          </div>
+          <div class="slide-container">
+            <span class="slide-text"> Delay </span>
+            <input type="range" min="0" max="100" value="0" class="slide" id="delay3">
+          </div>
+          <div class="slide-container">
+            <span class="slide-text"> Volume </span>
+            <input type="range" min="-30" max="0" value="-20" class="slide" id="volume3">
+          </div>
+        </div>
+      </div>
+
     </div>
+
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.2.0/Tone.js"></script>   
     <script src="teoria.js" type="text/javascript"></script>

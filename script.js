@@ -20,9 +20,9 @@ const reverb3 = document.querySelector("#reverb3")
 const delay1 = document.querySelector("#delay1")
 const delay2 = document.querySelector("#delay2")
 const delay3 = document.querySelector("#delay3")
-const db1 = document.querySelector("#volume1").value
-const db2 = document.querySelector("#volume2").value
-const db3 = document.querySelector("#volume3").value
+const volume1Val = document.querySelector("#volume1").value
+const volume2Val = document.querySelector("#volume2").value
+const volume3Val = document.querySelector("#volume3").value
 
 //TONE SOUNDS
 const synth1 = new Tone.Synth({
@@ -69,20 +69,29 @@ const synth3 = new Tone.Synth({
         "release": 1,
         "attackCurve" : "exponential"
     }
-}) // this creates a synth and connects it to speakers
-const freeverb1 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 800}).toMaster()
-const freeverb2 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).toMaster()
-const freeverb3 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).toMaster()
-const ppdelay1 = new Tone.PingPongDelay(0.25, 0.5).toMaster()
-const ppdelay2 = new Tone.PingPongDelay(0.25, 0.5).toMaster()
-const ppdelay3 = new Tone.PingPongDelay(0.25, 0.5).toMaster() 
+}) 
+
+
+// Tone effects defined and chained 
+
+const limiter = new Tone.Limiter(-12).toMaster()
+
+const volume1 = new Tone.Volume().connect(limiter)
+const volume2 = new Tone.Volume().connect(limiter)
+const volume3 = new Tone.Volume().connect(limiter)
+const freeverb1 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 800}).connect(volume1)
+const freeverb2 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).connect(volume2)
+const freeverb3 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).connect(volume3)
+const ppdelay1 = new Tone.PingPongDelay(0.25, 0.5).connect(freeverb1)
+const ppdelay2 = new Tone.PingPongDelay(0.25, 0.5).connect(freeverb2)
+const ppdelay3 = new Tone.PingPongDelay(0.25, 0.5).connect(freeverb3)
 const octiveDown = new Tone.PitchShift([-12]).toMaster();
-synth1.set("volume", db1)
-synth2.set("volume", db2)
-synth3.set("volume", db3)
-synth1.connect(ppdelay1).connect(freeverb1)
-synth2.connect(ppdelay2).connect(freeverb2)
-synth3.connect(ppdelay3).connect(freeverb3)
+synth1.set("volume", volume1Val)
+synth2.set("volume", volume2Val)
+synth3.set("volume", volume3Val)
+synth1.connect(ppdelay1)
+synth2.connect(ppdelay2)
+synth3.connect(ppdelay3)
 ppdelay1.wet.value = 0
 ppdelay2.wet.value = 0
 ppdelay3.wet.value = 0
@@ -92,30 +101,30 @@ freeverb3.wet.value = 0
 octiveDown.wet.value = 1
   
 //CONTROLS FOR ALL SLIDERS  
-const slider = document.querySelectorAll(".slider")  
-slider.forEach( slide => {
+const slide = document.querySelectorAll(".slide")  
+slide.forEach( slide => {
   slide.addEventListener("input", e => {
     const value = e.target.value
     const id = e.target.id
+
     const column1 = document.querySelector("#column1")
     const column2 = document.querySelector("#column2")
     const column3 = document.querySelector("#column3")
     if (id === "reverb1") {
       freeverb1.wet.value = value/100
-      column1.style.transition = "background-color " + value/70 + "s";
+      column1.style.transition = `background-color ${value/70}s`
     } else if (id === "reverb2") {
       freeverb2.wet.value = value/100
-      column2.style.transition = "background-color " + value/70 + "s";
+      column2.style.transition = `background-color ${value/70}s`
     } else if (id === "reverb3") {
       freeverb3.wet.value = value/100
-      column3.style.transition = "background-color " + value/70 + "s";
+      column3.style.transition = `background-color ${value/70}s`
     } else if (id === "volume1") {
-      synth1.set("volume", value);
+      volume1.volume.value = value      
     } else if (id === "volume2") {
-      synth2.set("volume", value);
-    }
-    else if (id === "volume3") {
-      synth3.set("volume", value);
+      volume2.volume = value
+    } else if (id === "volume3") {
+      volume2.volume.value = value
     } else if (id === "delay1") {
       ppdelay1.wet.value = value/100
     } else if (id === "delay2") {
@@ -129,16 +138,17 @@ slider.forEach( slide => {
   
 // GENERATE SCALE BUTTONS
 const allScales = teoria.Scale.KNOWN_SCALES;
-const scaleList = document.querySelector("#scalelist");
+const scaleList = document.querySelector("#scale-list");
 allScales.forEach(function(scale) {
   const button = document.createElement("button");
   button.innerHTML = scale;
+  button.classList.add("scale-button")
   scaleList.appendChild(button);
   button.classList.add("scalechoice")
 })
   
  //DISPLAY CURRENT SCALE. 
-const scaleDisplayElement = document.querySelector("#scaledisplay")
+const scaleDisplayElement = document.querySelector("#scale-display")
 
 
 //DISPLAY SCALE LIST ON HOVER
@@ -151,24 +161,26 @@ scaleList.addEventListener("mouseleave", e => {
 })
   
 //SCALE DEFINITION FUNCTION
-const scaleDisplay = document.querySelector("#scaledisplay");
-scaleDisplay.innerHTML = "Scale: major";
-let currentScale = getScale("c4", "major");
-function getScale(root, scale) {
+scaleDisplayElement.innerHTML = "Scale: major"
+
+const getScale = (root, scale) => {
   return teoria.scale(root, scale).notes().map(function(note){
     return note.midi()
-    
   })
 }
+
+let currentScale = getScale("c4", "major")
+
 
 //BUTTON EVENTLISTENER 
 const scaleButtons = document.querySelectorAll(".scalechoice");
 scaleButtons.forEach(button => {
   button.addEventListener("click", function(e) {
     let scale = e.target.innerHTML;
-    let root = "c4"; // this can be changed, but will be the root of the scales;
+    let root = "c4"; // this can be changed, but will be the root of the scales
     currentScale = getScale(root, scale);
-    scaleDisplay.innerHTML = "Scale: " + scale;
+    scaleDisplayElement.innerHTML = `Scale: ${scale}`
+    scaleList.style.display = "none"
   })
 });
 
@@ -195,7 +207,7 @@ function changeBackground(element) {
       let r = Math.floor(Math.random() * 256);
       let g = Math.floor(Math.random() * 256);
       let b = Math.floor(Math.random() * 256);
-      element.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')'; //this changes the background color every second
+      element.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')'
     }
 
 
@@ -212,15 +224,13 @@ columns.forEach(column => { // this returns an array of all objects with class .
     if (element.classList.contains("column")) {
       startInterval(element, id) //this calls the function with the input of the event's target
     }
-  } 
-                          // ,{once: true}
-  ) //once the element has been clicked, bgChange() is no longer called
+  }) 
 })
 
 
   
 //SLIDE BAR TOP
-const topContainer = document.querySelector("#topcontainer")
+const topContainer = document.querySelector("#top-container")
 columns.forEach(column => {
   column.addEventListener("click", ()=> {
     topContainer.style.transform = "translateY(-30%)"
@@ -229,26 +239,37 @@ columns.forEach(column => {
 
 
 //SLIDE BAR BOTTOM
-const bottomContainer = document.querySelector("#bottomcontainer");
+const bottomContainer = document.querySelector("#bottom-container");
 const arrow = document.querySelector("#arrow")
+
+const toggleBottomSlide = (direction) => {
+  if(direction === "up"){
+    bottomContainer.classList.add("active")
+    arrow.style.transform = "rotate(180deg)"
+    arrow.style.transition = "transform 1s"
+  } 
+  if(direction === "down"){
+    bottomContainer.classList.remove("active")
+    arrow.style.transform = "rotate(360deg)"
+    arrow.style.transition = "transform 1s"
+  }
+}
+
 bottomContainer.addEventListener("mouseenter", e => {
-  e.target.style.transform = "translateY(10px)"
-  e.target.style.opacity = "1"
-  arrow.style.transform = "rotate(180deg)"
-  arrow.style.transition = "transform 1s"
-  
+  toggleBottomSlide("up")
 })
 bottomContainer.addEventListener("mouseleave", e => {
-  e.target.style.transform = "translateY(170px)"
-  e.target.style.opacity = 0.4
-  arrow.style.transform = "rotate(360deg)"
-  arrow.style.transition = "transform 1s"
+  toggleBottomSlide("down")
 })
 
-
+arrow.addEventListener("touchstart", ()=>{
+  if(bottomContainer.classList.contains("active")){
+    toggleBottomSlide("down")
+  } else {
+    toggleBottomSlide("up")
+  }
+})
   
-  
-//COLOR GENERATE FUNCTION FOR HOVER COLUMNS
 //FUNCTION THAT GENERATES RANDOM BGR COLOR ON PAGE LOAD
 //APPLY COLOR TO EACH OF THE COLUMNS
 //INITIAL STATE HOVERING
@@ -274,13 +295,12 @@ columns.forEach(column => {
     if (column.getAttribute("data-clicked") == 'false') {
       e.target.style.backgroundColor = "white"
       column.style.transition = "background-color 0s"
-
     }
   })
 })               
 
   //FUNCTION CHANGES BG COLOR AND PLAYS RANDOM NOTE EVERY SECOND
-var flash;
+let flash;
 const startInterval = (element, id) => { //this function has an input, element, retrieved from the function below  
   if (id) {
     flash = setInterval(() => {
