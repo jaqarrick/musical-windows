@@ -1,10 +1,11 @@
-
-//SPLASH INTERACTION
+//SPLASH PAGE INTERACTION
 const splash = document.querySelector("#splash")
 const splashClick = document.querySelector("#click")
 
 splashClick.addEventListener("click", () => {
+  Tone.start()
   splash.style.display = "none"
+
 })
 splashClick.addEventListener("mouseenter", () => {
   splash.style.opacity = "0.8"
@@ -13,16 +14,6 @@ splashClick.addEventListener("mouseleave", () => {
   splash.style.opacity = "1"
 })
 
-//SLIDER CONTROLS
-const reverb1 = document.querySelector("#reverb1")
-const reverb2 = document.querySelector("#reverb2")
-const reverb3 = document.querySelector("#reverb3")
-const delay1 = document.querySelector("#delay1")
-const delay2 = document.querySelector("#delay2")
-const delay3 = document.querySelector("#delay3")
-const volume1Val = document.querySelector("#volume1").value
-const volume2Val = document.querySelector("#volume2").value
-const volume3Val = document.querySelector("#volume3").value
 
 //TONE SOUNDS
 const synth1 = new Tone.Synth({
@@ -73,31 +64,26 @@ const synth3 = new Tone.Synth({
 
 
 // Tone effects defined and chained 
-
 const limiter = new Tone.Limiter(-12).toMaster()
-
-const volume1 = new Tone.Volume().connect(limiter)
-const volume2 = new Tone.Volume().connect(limiter)
-const volume3 = new Tone.Volume().connect(limiter)
-const freeverb1 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 800}).connect(volume1)
-const freeverb2 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).connect(volume2)
-const freeverb3 = new Tone.Freeverb({roomSize  : 2 ,dampening  : 500}).connect(volume3)
-const ppdelay1 = new Tone.PingPongDelay(0.25, 0.5).connect(freeverb1)
-const ppdelay2 = new Tone.PingPongDelay(0.25, 0.5).connect(freeverb2)
-const ppdelay3 = new Tone.PingPongDelay(0.25, 0.5).connect(freeverb3)
+const volume1 = new Tone.Volume(-20).connect(limiter)
+const volume2 = new Tone.Volume(-20).connect(limiter)
+const volume3 = new Tone.Volume(-20).connect(limiter)
+const reverb1 = new Tone.Reverb().connect(volume1)
+const reverb2 = new Tone.Reverb().connect(volume2)
+const reverb3 = new Tone.Reverb().connect(volume3)
+const ppdelay1 = new Tone.PingPongDelay(0.25, 0.5).connect(reverb1)
+const ppdelay2 = new Tone.PingPongDelay(0.25, 0.5).connect(reverb2)
+const ppdelay3 = new Tone.PingPongDelay(0.25, 0.5).connect(reverb3)
 const octiveDown = new Tone.PitchShift([-12]).toMaster();
-synth1.set("volume", volume1Val)
-synth2.set("volume", volume2Val)
-synth3.set("volume", volume3Val)
 synth1.connect(ppdelay1)
 synth2.connect(ppdelay2)
 synth3.connect(ppdelay3)
 ppdelay1.wet.value = 0
 ppdelay2.wet.value = 0
 ppdelay3.wet.value = 0
-freeverb1.wet.value = 0
-freeverb2.wet.value = 0
-freeverb3.wet.value = 0
+reverb1.wet.value = 0
+reverb2.wet.value = 0
+reverb3.wet.value = 0
 octiveDown.wet.value = 1
   
 //CONTROLS FOR ALL SLIDERS  
@@ -111,20 +97,20 @@ slide.forEach( slide => {
     const column2 = document.querySelector("#column2")
     const column3 = document.querySelector("#column3")
     if (id === "reverb1") {
-      freeverb1.wet.value = value/100
+      reverb1.wet.value = value/100
       column1.style.transition = `background-color ${value/70}s`
     } else if (id === "reverb2") {
-      freeverb2.wet.value = value/100
+      reverb2.wet.value = value/100
       column2.style.transition = `background-color ${value/70}s`
     } else if (id === "reverb3") {
-      freeverb3.wet.value = value/100
+      reverb3.wet.value = value/100
       column3.style.transition = `background-color ${value/70}s`
     } else if (id === "volume1") {
       volume1.volume.value = value      
     } else if (id === "volume2") {
-      volume2.volume = value
-    } else if (id === "volume3") {
       volume2.volume.value = value
+    } else if (id === "volume3") {
+      volume3.volume.value = value
     } else if (id === "delay1") {
       ppdelay1.wet.value = value/100
     } else if (id === "delay2") {
@@ -202,6 +188,7 @@ function playRandomNote(id) {
   }
   synth.triggerAttackRelease(frequency, 0.2);
 }
+
 //FUNCTION THAT CHANGES BACKGROUND COLOR OF EACH COLUMN and CALLS playRandomNote() EVERY 1000ms  
 function changeBackground(element) {
       let r = Math.floor(Math.random() * 256);
@@ -209,9 +196,6 @@ function changeBackground(element) {
       let b = Math.floor(Math.random() * 256);
       element.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')'
     }
-
-
-
 
 // THIS ADDS EVENT LISTENERS FOR EACH COLUMN  
 const  columns = document.querySelectorAll('.column') 
@@ -226,8 +210,6 @@ columns.forEach(column => { // this returns an array of all objects with class .
     }
   }) 
 })
-
-
   
 //SLIDE BAR TOP
 const topContainer = document.querySelector("#top-container")
@@ -237,8 +219,7 @@ columns.forEach(column => {
   })
 })
 
-
-//SLIDE BAR BOTTOM
+//BOTTOM SLIDE BAR INTERACTION
 const bottomContainer = document.querySelector("#bottom-container");
 const arrow = document.querySelector("#arrow")
 
@@ -299,7 +280,7 @@ columns.forEach(column => {
   })
 })               
 
-  //FUNCTION CHANGES BG COLOR AND PLAYS RANDOM NOTE EVERY SECOND
+//FUNCTION CHANGES BG COLOR AND PLAYS RANDOM NOTE EVERY SECOND
 let flash;
 const startInterval = (element, id) => { //this function has an input, element, retrieved from the function below  
   if (id) {
